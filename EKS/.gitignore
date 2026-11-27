@@ -1,0 +1,22 @@
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+*.tfplan
+crash.log
+
+# Terraform lock file
+# Keep .terraform.lock.hcl committed for provider version consistency
+
+# Credentials
+.env
+*.pem
+*.key
+credentials
+
+# OS files
+.DS_Store
+Thumbs.db
