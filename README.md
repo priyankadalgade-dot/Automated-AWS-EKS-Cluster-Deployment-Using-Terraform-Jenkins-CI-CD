@@ -1,72 +1,79 @@
-```markdown
-# CICD-Terraform-EKS
+# Automated AWS EKS Cluster Deployment Using Terraform & Jenkins CI/CD
 
-This repository contains the code for deploying an Amazon EKS (Elastic Kubernetes Service) cluster using Terraform. The deployment process involves setting up an EC2 instance to run Jenkins, which then automates the creation and management of the EKS cluster through a CI/CD pipeline.
+## Project Overview
 
-## Repository Structure
+This project automates the provisioning of AWS infrastructure and deployment of a Kubernetes application using **Terraform, Jenkins, and Amazon EKS**.
 
-- `EKS/`: Contains the Terraform files needed to create the EKS cluster.
-- `jenkins-server/`: Contains the Terraform files needed to set up an EC2 instance that runs Jenkins.
+Terraform creates the Jenkins server and EKS infrastructure. Jenkins runs a pipeline to validate and apply Terraform configurations, then deploys an NGINX application to the Kubernetes cluster.
 
-## Deployment Steps
+## Architecture
 
-### 1. Prerequisites
+![AWS EKS Terraform and Jenkins CI/CD Architecture](./aws-eks-terraform-jenkins-architecture.png)
 
-Before starting the deployment, ensure you have the following:
 
-- An AWS Account
-- AWS Root Account Access Keys
+## Technologies Used
 
-#### Generating Root Account Access Keys
+- AWS (VPC, EC2, EKS, IAM)
+- Terraform
+- Jenkins
+- Docker / Kubernetes
+- NGINX
+- AWS CLI
+- kubectl
+- Git and GitHub
 
-To generate root account access keys for the AWS CLI:
+## Project Structure
 
-1. Sign in to the AWS Management Console as the root user.
-2. Navigate to the IAM (Identity and Access Management) service.
-3. In the navigation pane, choose "Users" and then select your root user.
-4. Choose the "Security credentials" tab, and then under "Access keys for CLI, SDK, & API access," choose "Create access key."
-5. Download the .csv file to store your access key ID and secret access key.
+```text
+.
+├── EKS/
+│   ├── configuration-files/
+│   │   ├── deployment.yml
+│   │   └── service.yml
+│   ├── backend.tf
+│   ├── Jenkinsfile
+│   ├── main.tf
+│   ├── provider.tf
+│   ├── variables.tf
+│   └── kubernetes.tf
+│
+├── jenkins-server/
+│   ├── backend.tf
+│   ├── jenkins-install.sh
+│   ├── main.tf
+│   ├── provider.tf
+│   └── variables.tf
+│
+└── README.md
+```
 
-### 2. Deploy EC2 Instance for Jenkins
+## Workflow
 
-The first step is to deploy an EC2 instance that will run Jenkins. This instance will have user data that installs Terraform, kubectl, Jenkins, and the AWS CLI.
+1. Push the project code to GitHub.
+2. Jenkins checks out the repository and runs the pipeline.
+3. Terraform initializes, formats, validates, and plans the infrastructure.
+4. After approval, Terraform provisions the EKS infrastructure.
+5. Jenkins configures `kubectl` access to the EKS cluster.
+6. Kubernetes manifests deploy NGINX with two replicas and expose it through a LoadBalancer service.
 
-1. Navigate to the `jenkins-server` directory.
-2. Initialize and apply the Terraform configuration:
-   ```bash
-   terraform init
-   terraform apply
-   ```
+## Configuration
 
-### 3. Configure Jenkins and Deploy EKS Cluster
+Before running the project:
 
-Once the EC2 instance is up and running, connect to it via SSH and configure Jenkins to automate the deployment of the EKS cluster.
+- Configure AWS credentials and required IAM permissions.
+- Create the S3 bucket referenced in the Terraform backend configuration.
+- Review the AWS region, Terraform variables, EC2 key pair, and EKS cluster settings.
+- Configure the AWS credentials in Jenkins.
+- Configure the Jenkins pipeline to use `EKS/Jenkinsfile`.
 
-1. SSH into the EC2 instance:
-   ```bash
-   ssh -i path/to/your-key.pem ec2-user@your-ec2-instance-public-dns
-   ```
-2. Open Jenkins and create a new pipeline job for deploying the EKS cluster.
-3. Use the `Jenkinsfile` provided in the repository to automate the deployment.
-4. After the EKS cluster is created, update the `kube-config` file to connect to the cluster:
-   ```bash
-   aws eks --region region-code update-kubeconfig --name cluster-name
-   ```
+Keep `terraform.tfstate`, `terraform.tfvars`, AWS credentials, and private keys out of GitHub.
 
-### 4. Deploy NGINX on EKS Cluster
+## Result
 
-With the EKS cluster up and running, you can deploy an NGINX application to the cluster using a Jenkins pipeline.
-
-1. Create a new Jenkins pipeline job for the deployment stage.
-2. Use the provided `Jenkinsfile` to deploy NGINX on the EKS cluster.
-
-## Conclusion
-
-This setup provides a robust CI/CD pipeline for managing an EKS cluster using Terraform and Jenkins. By following the steps outlined above, you can automate the deployment and management of your Kubernetes clusters on AWS.
+The project provisions an AWS EKS cluster and deploys an NGINX application using a Jenkins CI/CD pipeline.
 
 ## Author
 
-Ansar Shaik
+**Priyanka Dalgade**
 
-For any queries, please contact me at [ansarshaik965@gmail.com](mailto:ansarshaik965@gmail.com).
-```
+[GitHub Profile](https://github.com/priyankadalgade-dot)
