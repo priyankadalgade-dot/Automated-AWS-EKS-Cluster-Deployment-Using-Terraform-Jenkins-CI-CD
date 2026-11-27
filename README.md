@@ -2,14 +2,13 @@
 
 ## Project Overview
 
-This project automates the provisioning of AWS infrastructure and deployment of a Kubernetes application using **Terraform, Jenkins, and Amazon EKS**.
+This project automates the provisioning of AWS infrastructure and deployment of a Kubernetes application using Terraform, Jenkins, and Amazon EKS.
 
 Terraform creates the Jenkins server and EKS infrastructure. Jenkins runs a pipeline to validate and apply Terraform configurations, then deploys an NGINX application to the Kubernetes cluster.
 
 ## Architecture
 
 ![AWS EKS Terraform and Jenkins CI/CD Architecture](./aws-eks-terraform-jenkins-architecture.png)
-
 
 ## Technologies Used
 
@@ -24,8 +23,8 @@ Terraform creates the Jenkins server and EKS infrastructure. Jenkins runs a pipe
 
 ## Project Structure
 
-```text
-.
+
+
 ├── EKS/
 │   ├── configuration-files/
 │   │   ├── deployment.yml
@@ -45,7 +44,7 @@ Terraform creates the Jenkins server and EKS infrastructure. Jenkins runs a pipe
 │   └── variables.tf
 │
 └── README.md
-```
+
 
 ## Workflow
 
@@ -56,24 +55,10 @@ Terraform creates the Jenkins server and EKS infrastructure. Jenkins runs a pipe
 5. Jenkins configures `kubectl` access to the EKS cluster.
 6. Kubernetes manifests deploy NGINX with two replicas and expose it through a LoadBalancer service.
 
-## Configuration
 
-Before running the project:
-
-- Configure AWS credentials and required IAM permissions.
-- Create the S3 bucket referenced in the Terraform backend configuration.
-- Review the AWS region, Terraform variables, EC2 key pair, and EKS cluster settings.
-- Configure the AWS credentials in Jenkins.
-- Configure the Jenkins pipeline to use `EKS/Jenkinsfile`.
-
-Keep `terraform.tfstate`, `terraform.tfvars`, AWS credentials, and private keys out of GitHub.
 
 ## Result
 
 The project provisions an AWS EKS cluster and deploys an NGINX application using a Jenkins CI/CD pipeline.
 
-## Author
 
-**Priyanka Dalgade**
-
-[GitHub Profile](https://github.com/priyankadalgade-dot)
