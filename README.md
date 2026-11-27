@@ -23,8 +23,7 @@ Terraform creates the Jenkins server and EKS infrastructure. Jenkins runs a pipe
 
 ## Project Structure
 
-
-
+```text
 ├── EKS/
 │   ├── configuration-files/
 │   │   ├── deployment.yml
@@ -44,6 +43,7 @@ Terraform creates the Jenkins server and EKS infrastructure. Jenkins runs a pipe
 │   └── variables.tf
 │
 └── README.md
+```
 
 
 ## Workflow
