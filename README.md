@@ -1,1 +1,0 @@
-# Automated-AWS-EKS-Cluster-Deployment-Using-Terraform-Jenkins-CI-CD
